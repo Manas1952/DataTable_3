@@ -1,6 +1,6 @@
 import com.opensymphony.xwork2.ActionSupport;
-
 import java.sql.*;
+
 public class Action extends ActionSupport {
   Connection connection = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
 
@@ -49,8 +49,6 @@ public class Action extends ActionSupport {
     try {
       PreparedStatement preparedStatement1 = connection.prepareStatement("insert into profiles values (?,?,?)");
 
-      System.out.println(firstname + " " + lastname + " " + age);
-
       if (!firstname.equals("") && !lastname.equals("") && age != 0) {
         preparedStatement1.setString(1, firstname);
         preparedStatement1.setString(2, lastname);
@@ -62,10 +60,9 @@ public class Action extends ActionSupport {
 
       int count = 0;
       while (resultSet.next()) {
-//        System.out.println("*");
 
         profiles += ("[\"" + resultSet.getObject(1) + "\", \"" + resultSet.getObject(2) + "\", \"" + resultSet.getObject(3) + "\"],");
-//        System.out.println(resultSet.getObject(1) + " " + resultSet.getObject(2) + " " + resultSet.getObject(3));
+
         count++;
       }
       if (count == 0) {
@@ -74,25 +71,26 @@ public class Action extends ActionSupport {
         profiles = profiles.substring(0, profiles.length() - 1);
         profiles += "]}";
       }
-      System.out.println("--->" + profiles);
+
     } catch (SQLException e) {
       System.out.println(e);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
+
     return "index";
   }
 
   public String fetchData() {
     try {
-//      PreparedStatement preparedStatement = connection.prepareStatement("select * from profiles");
 
       ResultSet resultSet = preparedStatement.executeQuery();
 
       int count = 0;
       while (resultSet.next()) {
-//        System.out.println("*");
 
         profiles += ("[\"" + resultSet.getObject(1) + "\", \"" + resultSet.getObject(2) + "\", \"" + resultSet.getObject(3) + "\"],");
-//        System.out.println(resultSet.getObject(1) + " " + resultSet.getObject(2) + " " + resultSet.getObject(3));
+
         count++;
       }
       if (count == 0) {
@@ -101,7 +99,6 @@ public class Action extends ActionSupport {
         profiles = profiles.substring(0, profiles.length() - 1);
         profiles += "]}";
       }
-      System.out.println("->" + profiles);
     } catch (SQLException e) {
       System.out.println(e);
     }

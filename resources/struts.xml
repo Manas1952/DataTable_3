@@ -9,7 +9,6 @@
     <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
 
     <package name="default" extends="struts-default, json-default" namespace="/">
-
         <result-types>
             <result-type name="json" class="org.apache.struts2.json.JSONResult">
                 <param name="noCache">true</param>
@@ -19,6 +18,9 @@
         </result-types>
 
         <action name="">
+<!--        <interceptor-ref name="defaultStack" >-->
+<!--            <param name="cspInterceptor.disabled">true</param>-->
+<!--        </interceptor-ref>-->
             <result>/index.jsp</result>
         </action>
 

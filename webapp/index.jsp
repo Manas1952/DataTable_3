@@ -1,11 +1,9 @@
-<%--<%@ taglib prefix="s" uri="/struts-tags" %>--%>
-
 <html>
 <head>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
 
-  <script crossorigin= "anonymous" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script crossorigin= "anonymous" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 </head>
 <center>
   <h1 style="color: green;">
@@ -29,7 +27,7 @@
   <label>First Name: </label><input id="firstname" type="text">
   <label>Last Name: </label><input id="lastname" type="text">
   <label>Age: </label><input id="age" type="text">
-  <button type="submit">Submit</button>
+  <button type="submit" id="submit">Submit</button>
 </form>
 
 <script>
@@ -44,7 +42,7 @@
         type: "GET",
         url: "getData",
         success: (tableData) => {
-          console.log('->', tableData.firstname)
+          console.log('->', (JSON.parse(tableData.profiles)).data)
           $('#tableID').dataTable({
             "data": (JSON.parse(tableData.profiles)).data
           });
@@ -55,8 +53,8 @@
       })
     })
 
-    $("#form").submit(() => {
-
+    $("#submit").click((event) => {
+      event.preventDefault()
       let jsonData = {
         firstname: $("#firstname").val(),
         lastname: $("#lastname").val(),
@@ -81,5 +79,6 @@
 
   });
 </script>
+
 </body>
 </html>
